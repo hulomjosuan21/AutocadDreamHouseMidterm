@@ -1,0 +1,142 @@
+ROUTER 1
+conf t
+int f0/0 
+ip add 10.10.10.1 255.255.255.0
+no shut
+exit
+
+int f0/0.10
+encapsulation dot1q 10
+ip add 20.10.10.1 255.255.255.0
+no shut
+
+int f0/0.20
+encapsulation dot1q 20
+ip add 30.10.10.1 255.255.255.0
+no shut
+
+int f0/0.30
+encapsulation dot1q 30
+ip add 40.10.10.1 255.255.255.0
+no shut
+
+int f0/0.40
+encapsulation dot1q 40
+ip add 50.10.10.1 255.255.255.0
+no shut
+end
+wr
+
+sh ip int br
+
+MULTILAYER SWITCH 2
+vlan database
+vlan 10 name CCS
+exit
+
+conf t
+int f0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shut
+exit
+
+int f0/1
+switchport mode access
+switchport access vlan 10
+END 
+WR
+
+MULTILAYER SWITCH 3
+vlan database
+vlan 20 name CRIM
+exit
+
+conf t
+int f0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shut
+exit
+
+int f0/1
+switchport mode access
+switchport access vlan 20
+END 
+WR
+
+MULTILAYER SWITCH 4
+vlan database
+vlan 30 name CTE
+exit
+
+conf t
+int f0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shut
+exit
+
+int f0/1
+switchport mode access
+switchport access vlan 30
+END 
+WR
+
+MULTILAYER SWITCH 5
+vlan database
+vlan 40 name CJE
+exit
+
+conf t
+int f0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shut
+exit
+
+int f0/1
+switchport mode access
+switchport access vlan 40
+END 
+WR
+
+PC 1
+conf t
+int f0/0 
+ip add 20.10.10.2 255.255.255.0
+no shut 
+no ip routing 
+end
+wr
+sh ip int br
+
+PC 2
+conf t
+int f0/0 
+ip add 30.10.10.2 255.255.255.0
+no shut 
+no ip routing 
+end
+wr
+sh ip int br
+
+PC 3
+conf t
+int f0/0 
+ip add 40.10.10.2 255.255.255.0
+no shut 
+no ip routing 
+end
+wr
+sh ip int br
+
+PC 4
+conf t
+int f0/0 
+ip add 50.10.10.2 255.255.255.0
+no shut 
+no ip routing 
+end
+wr
+sh ip int br
